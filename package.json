@@ -1,0 +1,25 @@
+{
+  "name": "krishiguru-dashboard",
+  "version": "1.0.0",
+  "description": "Intelligent Farmer Dashboard for crop recommendations, Mandi price margin-matching, real-time weather analytics, multilingual voice chatbot assistant, and scheduling reminders.",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx -y http-server -p 8080 -o"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "keywords": [
+    "agrotech",
+    "farmers",
+    "crop-recommendation",
+    "weather-forecast",
+    "mandi-prices",
+    "multilingual",
+    "voice-assistant",
+    "pest-management"
+  ],
+  "author": "Antigravity AG",
+  "license": "MIT"
+}

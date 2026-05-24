@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KrishiGuru (कृषिगुरू) - Intelligent Farmer Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- FontAwesome CDN for premium icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  
+  <div class="app-container">
+    
+    <!-- HEADER -->
+    <header>
+      <div class="brand-section">
+        <div class="brand-logo-img">
+          <i class="fa-solid fa-wheat-awn"></i>
+        </div>
+        <div class="brand-meta">
+          <h2 id="txt-title">KrishiGuru</h2>
+          <span id="txt-subtitle">Intelligent Farmer Dashboard</span>
+        </div>
+      </div>
+      
+      <div class="header-controls">
+        <select id="langSelect" class="language-selector">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="ta">தமிழ் (Tamil)</option>
+          <option value="te">తెలుగు (Telugu)</option>
+          <option value="bn">বাংলা (Bengali)</option>
+        </select>
+        
+        <button id="themeToggleBtn" class="control-btn" title="Toggle Theme">
+          <i id="themeIcon" class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+    </header>
+    
+    <!-- DASHBOARD GRID -->
+    <main class="dashboard-grid">
+      
+      <!-- COLUMN 1: SOIL health forum -->
+      <section class="panel col-soil">
+        <div class="panel-header">
+          <h3><i class="fa-solid fa-flask"></i> <span id="txt-soilAnalyzer">Soil Health Analyzer</span></h3>
+        </div>
+        
+        <form id="soilForm" onsubmit="return false;">
+          <!-- N-P-K Inputs -->
+          <div class="soil-form-group">
+            <label id="lbl-nutrients">Macronutrients (N-P-K in mg/kg)</label>
+            <div class="nutrients-grid">
+              <div class="nutrient-card">
+                <span id="lbl-n">Nitrogen (N)</span>
+                <input type="number" id="inputN" class="nutrient-input" value="75" min="0" max="300" required>
+              </div>
+              <div class="nutrient-card">
+                <span id="lbl-p">Phosphorus (P)</span>
+                <input type="number" id="inputP" class="nutrient-input" value="45" min="0" max="300" required>
+              </div>
+              <div class="nutrient-card">
+                <span id="lbl-k">Potassium (K)</span>
+                <input type="number" id="inputK" class="nutrient-input" value="50" min="0" max="300" required>
+              </div>
+            </div>
+          </div>
+          
+          <!-- pH Level Slider -->
+          <div class="soil-form-group">
+            <label id="lbl-phLevel">Soil pH Level</label>
+            <div class="ph-slider-container">
+              <div class="ph-info">
+                <span id="phLabelText" style="font-weight:600; font-size:0.85rem;">Neutral (तटस्थ)</span>
+                <span id="phValueText" class="ph-value">6.5</span>
+              </div>
+              <div class="ph-gauge-bar">
+                <input type="range" id="inputPh" class="ph-slider" min="3.5" max="9.5" step="0.1" value="6.5">
+              </div>
+              <div class="ph-labels">
+                <span>3.5 (Acidic)</span>
+                <span>7.0 (Neutral)</span>
+                <span>9.5 (Alkaline)</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Moisture Progress Slider -->
+          <div class="soil-form-group">
+            <label id="lbl-moisture">Soil Moisture</label>
+            <div class="moisture-card">
+              <div style="display:flex; justify-content:space-between; font-weight:600; font-size:0.85rem; margin-bottom:4px;">
+                <span>Saturation (संतृप्ति)</span>
+                <span id="moistureValText">55%</span>
+              </div>
+              <input type="range" id="inputMoisture" class="moisture-slider-input" min="5" max="100" value="55">
+            </div>
+          </div>
+          
+          <!-- Soil Type cards selector -->
+          <div class="soil-form-group">
+            <label id="lbl-soilType">Soil Type</label>
+            <div class="soil-types-grid">
+              <div class="soil-type-card active" data-type="loam" id="st-loam">Loamy</div>
+              <div class="soil-type-card" data-type="clay" id="st-clay">Clayey</div>
+              <div class="soil-type-card" data-type="sand" id="st-sand">Sandy</div>
+              <div class="soil-type-card" data-type="silt" id="st-silt">Silty</div>
+              <div class="soil-type-card" data-type="peat" id="st-peat">Peaty</div>
+              <div class="soil-type-card" data-type="chalk" id="st-chalk">Chalky</div>
+            </div>
+          </div>
+          
+          <!-- Location Region Selector -->
+          <div class="soil-form-group">
+            <label id="lbl-location">Agricultural Region</label>
+            <select id="inputRegion" class="select-input">
+              <!-- Dynamically populated in app.js -->
+            </select>
+          </div>
+          
+          <button type="submit" id="btn-analyze" class="action-btn">
+            <i class="fa-solid fa-magnifying-glass-chart"></i>
+            <span id="txt-analyzeBtn">Analyze Soil & Fetch Climate</span>
+          </button>
+        </form>
+      </section>
+      
+      <!-- COLUMN 2: WEATHER PANEL -->
+      <section class="panel col-weather">
+        <div class="panel-header">
+          <h3><i class="fa-solid fa-cloud-sun"></i> <span id="txt-climateCenter">Climate & Weather Intelligence</span></h3>
+          <span style="font-size:0.85rem; font-weight:600; color:var(--accent-color);" id="txt-liveIndicator">
+            <i class="fa-solid fa-circle-dot" style="animation: pulse-recording 2s infinite;"></i> Real API Feed
+          </span>
+        </div>
+        
+        <!-- Large status banner -->
+        <div class="weather-status-main">
+          <div class="weather-status-left">
+            <h4 id="weatherRegionName">Punjab (Ludhiana)</h4>
+            <p id="weatherConditionText">Sunny and Clear Sky</p>
+          </div>
+          <div class="weather-status-right" id="weatherConditionIcon">
+            <i class="fa-solid fa-sun" style="color: var(--accent-color);"></i>
+          </div>
+        </div>
+        
+        <!-- Metrics rows -->
+        <div class="climate-summary-grid">
+          <div class="weather-metric-card">
+            <i class="fa-solid fa-temperature-high"></i>
+            <span id="lbl-metric-temp">Temperature</span>
+            <h4 id="val-temp">32°C</h4>
+          </div>
+          <div class="weather-metric-card">
+            <i class="fa-solid fa-droplet"></i>
+            <span id="lbl-metric-humidity">Humidity</span>
+            <h4 id="val-humidity">58%</h4>
+          </div>
+          <div class="weather-metric-card">
+            <i class="fa-solid fa-wind"></i>
+            <span id="lbl-metric-wind">Wind Speed</span>
+            <h4 id="val-wind">14 km/h</h4>
+          </div>
+          <div class="weather-metric-card">
+            <i class="fa-solid fa-cloud-showers-water"></i>
+            <span id="lbl-metric-rain">Rain Chance</span>
+            <h4 id="val-rain">10%</h4>
+          </div>
+        </div>
+        
+        <!-- 7-Day Forecast timeline -->
+        <div>
+          <h4 id="txt-weeklyForecast" style="font-size:0.95rem; font-weight:700; margin-bottom:12px;">7-Day Agronomic Forecast</h4>
+          <div id="forecastRow" class="forecast-container">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </section>
+      
+      <!-- CROP RECOMMENDER PANEL -->
+      <section class="panel col-recommendations">
+        <div class="panel-header">
+          <h3><i class="fa-solid fa-hand-holding-hand"></i> <span id="txt-recommendations">Profit-Maximized Crop Recommendations</span></h3>
+          <i class="fa-solid fa-circle-question" style="color:var(--text-secondary); cursor:help;" id="cropTipTooltip" title="Expected profits are calculated using live wholesale Mandi price quotes less baseline cultivation parameters per acre."></i>
+        </div>
+        
+        <div id="recommendationsList" class="recommendations-wrapper">
+          <!-- Dynamically populated cards -->
+        </div>
+        
+        <div style="margin-top:14px; font-size:0.8rem; color:var(--text-secondary); display:flex; align-items:center; gap:6px;">
+          <i class="fa-solid fa-circle-info" style="color:var(--primary-color);"></i>
+          <span id="txt-profitTip">Profit maximized using real-time local mandi price margins.</span>
+        </div>
+      </section>
+      
+      <!-- KRISHI SAHAYAK ASSISTANT (CHAT) -->
+      <section class="panel col-assistant">
+        <div class="panel-header">
+          <h3><i class="fa-solid fa-microphone-lines"></i> <span id="txt-assistantTitle">Krishi Sahayak (Speech Assistant)</span></h3>
+        </div>
+        
+        <div class="assistant-container">
+          <div id="chatMessages" class="chat-messages">
+            <!-- Dialog bubble -->
+            <div class="chat-bubble bubble-assistant">
+              <span id="chatWelcomeText">Hello! I am Krishi Sahayak. Tap the microphone to speak, or type your query. I can help you improve soil quality, manage pests, check market rates, or schedule irrigation.</span>
+              <button class="speak-response-btn" onclick="window.speakWelcomeText()"><i class="fa-solid fa-volume-high"></i></button>
+            </div>
+          </div>
+          
+          <div class="chat-input-wrapper">
+            <button id="micBtn" class="voice-mic-btn" title="Speak to Assistant">
+              <i class="fa-solid fa-microphone"></i>
+            </button>
+            <input type="text" id="chatInput" class="chat-text-input" placeholder="Ask me anything about crops, pests, soil, or weather...">
+            <button id="chatSendBtn" class="chat-send-btn">
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </div>
+          
+          <div style="font-size:0.75rem; color:var(--text-secondary); text-align:center; margin-top:8px;" id="txt-speechHint">
+            Tap mic to speak
+          </div>
+        </div>
+      </section>
+      
+      <!-- SCHEDULER & PEST MANAGEMENT -->
+      <section class="panel col-scheduler">
+        <div class="panel-header">
+          <h3><i class="fa-solid fa-calendar-check"></i> <span id="txt-irrigationPestScheduler">Smart Irrigation & Pest Alert Registry</span></h3>
+        </div>
+        
+        <div class="scheduler-split">
+          
+          <!-- Left side: Water Reminders -->
+          <div class="irrigation-panel">
+            <h4 id="txt-nextIrrigation" style="font-size:1rem; font-weight:700; border-bottom:1px solid var(--card-border); padding-bottom:8px;">Next Scheduled Irrigation</h4>
+            
+            <div class="irrigation-card">
+              <div id="irrigationIndicatorIcon" class="irrigation-icon normal">
+                <i class="fa-solid fa-droplet-slash"></i>
+              </div>
+              <div class="irrigation-content">
+                <h4 id="irrigationActionText">No data analyzed yet.</h4>
+                <p id="irrigationReasonText">Enter NPK and click Analyze to calculate hydration schedule.</p>
+              </div>
+            </div>
+            
+            <!-- Future irrigation schedules log -->
+            <div class="reminder-scheduler-log">
+              <h5 id="lbl-activeIrrigationLogs"><i class="fa-solid fa-droplets" style="color:var(--info-color);"></i> Hydration Schedule Log</h5>
+              <div class="reminder-list" id="irrigationRemindersLog">
+                <div class="reminder-item" style="color:var(--text-secondary); justify-content:center;">No upcoming watering actions scheduled.</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Right side: Pest Diagnosis Wizard -->
+          <div class="pest-panel">
+            <h4 id="txt-pestControl" style="font-size:1rem; font-weight:700; border-bottom:1px solid var(--card-border); padding-bottom:8px;">Pest Management Advisor</h4>
+            
+            <div class="pest-form">
+              <div class="soil-form-group" style="margin-bottom:10px;">
+                <label id="lbl-selectCrop">Select Your Crop</label>
+                <select id="pestCropSelect" class="select-input">
+                  <option value="paddy">Paddy (Rice)</option>
+                  <option value="wheat">Wheat (गेहूं)</option>
+                  <option value="cotton">Cotton (कपास)</option>
+                  <option value="sugarcane">Sugarcane (गन्ना)</option>
+                  <option value="maize">Maize (मक्का)</option>
+                </select>
+              </div>
+              
+              <div class="soil-form-group" style="margin-bottom:14px;">
+                <label id="lbl-selectSymptoms">Select Visual Symptoms</label>
+                <select id="pestSymptomSelect" class="select-input">
+                  <!-- Loaded dynamically based on crop selection -->
+                </select>
+              </div>
+              
+              <button id="btn-pestDiagnose" class="action-btn" style="padding: 10px; font-size: 0.95rem; background:linear-gradient(135deg, var(--accent-color) 0%, #ca8a04 100%); box-shadow:0 6px 16px var(--accent-glow);">
+                <i class="fa-solid fa-stethoscope"></i>
+                <span id="txt-recommendTreatment">Diagnose & Find Treatment</span>
+              </button>
+            </div>
+            
+            <!-- Diagnosis Result Card -->
+            <div id="pestResultCard" class="pest-result-card">
+              <div class="pest-result-item">
+                <label id="lbl-pestDiagnosis">Diagnosis Result</label>
+                <p id="resPestName" style="font-weight:700; color:var(--text-primary);">Yellow Stem Borer</p>
+              </div>
+              <div class="pest-result-item">
+                <label id="lbl-recommendedPesticide">Recommended Pesticide / Treatment</label>
+                <p id="resPestTreatment">Apply Cartap Hydrochloride or Trichoderma cards.</p>
+              </div>
+              <div class="pest-result-item">
+                <label id="lbl-safetyInstruction">Safety Instructions</label>
+                <p id="resPestSafety" style="color:var(--text-secondary); font-size:0.8rem;">Use protective gloves.</p>
+              </div>
+              
+              <button id="btn-addPestReminder" class="action-btn" style="padding:8px 12px; font-size:0.85rem; margin-top:8px;">
+                <i class="fa-solid fa-bell"></i>
+                <span id="txt-addReminder">Schedule Spray Reminder</span>
+              </button>
+            </div>
+            
+            <!-- Pesticide reminders logs -->
+            <div class="reminder-scheduler-log">
+              <h5 id="lbl-activePestLogs"><i class="fa-solid fa-shield-halved" style="color:var(--accent-color);"></i> Active Spray Calendars</h5>
+              <div class="reminder-list" id="pestRemindersLog">
+                <div class="reminder-item" style="color:var(--text-secondary); justify-content:center;">No spray timers currently set.</div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+      
+    </main>
+    
+    <!-- FOOTER -->
+    <footer>
+      <p>© 2026 KrishiGuru Agrotech Platform. Dedicated to Indian Farmers. 🌾🇮🇳</p>
+    </footer>
+    
+  </div>
+
+  <!-- Application logic modules loaded dynamically in order -->
+  <script src="js/languages.js"></script>
+  <script src="js/weather.js"></script>
+  <script src="js/market.js"></script>
+  <script src="js/recommendation.js"></script>
+  <script src="js/scheduler.js"></script>
+  <script src="js/assistant.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

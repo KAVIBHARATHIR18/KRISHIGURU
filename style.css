@@ -1,0 +1,1027 @@
+/* ==========================================
+   KrishiGuru (कृषिगुरू) - Core Design System
+   ========================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* Dark Mode Palette (Default) */
+  --bg-gradient: radial-gradient(circle at 80% 20%, #16241a 0%, #080f0b 100%);
+  --panel-bg: rgba(20, 35, 25, 0.45);
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --panel-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  
+  --primary-color: #22c55e;
+  --primary-glow: rgba(34, 197, 94, 0.4);
+  --accent-color: #eab308; /* Indian harvest gold */
+  --accent-glow: rgba(234, 179, 8, 0.3);
+  
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-inverse: #0f172a;
+  
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-border: rgba(255, 255, 255, 0.12);
+  --input-focus: #22c55e;
+  
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.06);
+  
+  --danger-color: #ef4444;
+  --danger-glow: rgba(239, 68, 68, 0.3);
+  --info-color: #3b82f6;
+  
+  --transition-speed: 0.3s;
+  --font-heading: 'Outfit', 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+[data-theme="light"] {
+  /* Light Mode Palette */
+  --bg-gradient: radial-gradient(circle at 80% 20%, #f0fdf4 0%, #dcfce7 100%);
+  --panel-bg: rgba(255, 255, 255, 0.65);
+  --panel-border: rgba(22, 163, 74, 0.12);
+  --panel-shadow: 0 16px 40px rgba(22, 101, 52, 0.08);
+  
+  --primary-color: #16a34a;
+  --primary-glow: rgba(22, 163, 74, 0.2);
+  --accent-color: #ca8a04;
+  --accent-glow: rgba(202, 138, 4, 0.25);
+  
+  --text-primary: #14532d;
+  --text-secondary: #4f6f52;
+  --text-inverse: #ffffff;
+  
+  --input-bg: rgba(22, 163, 74, 0.04);
+  --input-border: rgba(22, 163, 74, 0.15);
+  --input-focus: #16a34a;
+  
+  --card-bg: rgba(255, 255, 255, 0.5);
+  --card-border: rgba(22, 163, 74, 0.08);
+  
+  --danger-color: #dc2626;
+  --danger-glow: rgba(220, 38, 38, 0.2);
+  --info-color: #2563eb;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-gradient);
+  color: var(--text-primary);
+  min-height: 100vh;
+  transition: background var(--transition-speed), color var(--transition-speed);
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Base App Layout */
+.app-container {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex: 1;
+}
+
+/* Header Component */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  box-shadow: var(--panel-shadow);
+  transition: all var(--transition-speed) ease;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-logo {
+  font-size: 2.2rem;
+  background: linear-gradient(135deg, var(--primary-color) 30%, var(--accent-color) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  font-family: var(--font-heading);
+  letter-spacing: -0.5px;
+}
+
+.brand-logo-img {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #fff;
+  box-shadow: 0 4px 15px var(--primary-glow);
+}
+
+.brand-meta h2 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.brand-meta span {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.control-btn {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-primary);
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+}
+
+.control-btn:hover {
+  background: var(--primary-color);
+  color: var(--text-inverse);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px var(--primary-glow);
+}
+
+.language-selector {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-primary);
+  padding: 8px 16px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.language-selector:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+
+.panel {
+  background: var(--panel-bg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--panel-border);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: var(--panel-shadow);
+  transition: all var(--transition-speed) ease;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 12px;
+}
+
+.panel-header h3 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.panel-header h3 i {
+  color: var(--primary-color);
+  font-size: 1.4rem;
+}
+
+/* Columns Span Setup */
+.col-soil { grid-column: span 5; }
+.col-weather { grid-column: span 7; }
+.col-recommendations { grid-column: span 7; }
+.col-assistant { grid-column: span 5; }
+.col-scheduler { grid-column: span 12; }
+
+/* Soil Forum Styling */
+.soil-form-group {
+  margin-bottom: 18px;
+}
+
+.soil-form-group label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.nutrients-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.nutrient-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 12px;
+  text-align: center;
+  transition: border-color 0.2s ease;
+}
+
+.nutrient-card:focus-within {
+  border-color: var(--primary-color);
+}
+
+.nutrient-card span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.nutrient-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-align: center;
+  outline: none;
+  font-family: var(--font-heading);
+}
+
+/* pH Slider */
+.ph-slider-container {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.ph-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.ph-value {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--accent-color);
+}
+
+.ph-gauge-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(to right, 
+    #ef4444 0%, /* Acidic */
+    #eab308 40%, 
+    #22c55e 50%, /* Neutral */
+    #3b82f6 70%, 
+    #a855f7 100% /* Alkaline */
+  );
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.ph-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background: transparent;
+  outline: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.ph-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid var(--text-inverse);
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  cursor: pointer;
+}
+
+.ph-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* Soil Types selector */
+.soil-types-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.soil-type-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 10px 4px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.soil-type-card:hover {
+  background: rgba(34, 197, 94, 0.05);
+}
+
+.soil-type-card.active {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--text-inverse);
+  box-shadow: 0 4px 12px var(--primary-glow);
+}
+
+/* Form input selectors */
+.select-input, .text-input {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-primary);
+  padding: 10px 14px;
+  border-radius: 12px;
+  outline: none;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+
+.select-input:focus, .text-input:focus {
+  border-color: var(--primary-color);
+}
+
+/* Soil Moisture Slider Card */
+.moisture-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.moisture-slider-input {
+  width: 100%;
+  margin-top: 10px;
+  accent-color: var(--primary-color);
+}
+
+.action-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--primary-color) 0%, #15803d 100%);
+  border: none;
+  color: #fff;
+  padding: 14px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.05rem;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 24px var(--primary-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px var(--primary-glow);
+}
+
+/* Climate panel styling */
+.climate-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.weather-metric-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.weather-metric-card i {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.weather-metric-card span {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.weather-metric-card h4 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-top: 4px;
+}
+
+.weather-status-main {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(59, 130, 246, 0.1) 100%);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  padding: 16px 24px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weather-status-left h4 {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.weather-status-left p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.weather-status-right {
+  font-size: 2.5rem;
+}
+
+/* Forecast row */
+.forecast-container {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.forecast-card {
+  flex: 1;
+  min-width: 80px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 12px 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.forecast-card .day {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.forecast-card .temp-range {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin: 6px 0;
+}
+
+.forecast-card .rain-prob {
+  font-size: 0.7rem;
+  color: var(--info-color);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* Crop Recommendations Panel styling */
+.recommendations-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 480px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.recommendations-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.recommendations-wrapper::-webkit-scrollbar-thumb {
+  background: var(--card-border);
+  border-radius: 3px;
+}
+
+.crop-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 18px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.crop-card:hover {
+  transform: translateX(4px);
+  border-color: var(--primary-color);
+  background: rgba(34, 197, 94, 0.02);
+}
+
+.crop-card.rank-0 {
+  background: linear-gradient(90deg, rgba(34, 197, 94, 0.05) 0%, rgba(234, 179, 8, 0.02) 100%);
+  border-left: 5px solid var(--accent-color);
+}
+
+.crop-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--accent-color);
+  color: var(--text-inverse);
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-bottom-left-radius: 12px;
+  text-transform: uppercase;
+}
+
+.crop-card-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.crop-main h4 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.crop-details {
+  display: flex;
+  gap: 12px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.crop-details span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.crop-card-right {
+  text-align: right;
+}
+
+.profit-figure {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--primary-color);
+}
+
+.market-rate {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.rate-trend {
+  font-weight: 600;
+  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  border-radius: 6px;
+  padding: 1px 6px;
+}
+
+.trend-up {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.trend-down {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.score-radial {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent-color);
+}
+
+/* Chat Assistant Panel */
+.assistant-container {
+  display: flex;
+  flex-direction: column;
+  height: 480px;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: var(--card-border);
+  border-radius: 3px;
+}
+
+.chat-bubble {
+  max-width: 85%;
+  padding: 12px 16px;
+  border-radius: 18px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  position: relative;
+}
+
+.bubble-assistant {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  align-self: flex-start;
+  border-top-left-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bubble-user {
+  background: linear-gradient(135deg, var(--primary-color) 0%, #15803d 100%);
+  color: #fff;
+  align-self: flex-end;
+  border-top-right-radius: 4px;
+}
+
+.speak-response-btn {
+  background: transparent;
+  border: none;
+  color: var(--accent-color);
+  align-self: flex-end;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 2px;
+  transition: transform 0.2s ease;
+}
+
+.speak-response-btn:hover {
+  transform: scale(1.2);
+}
+
+.chat-input-wrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.voice-mic-btn {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-primary);
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.voice-mic-btn.listening {
+  background: var(--danger-color);
+  color: #fff;
+  border-color: var(--danger-color);
+  box-shadow: 0 0 15px var(--danger-glow);
+  animation: pulse-recording 1.5s infinite;
+}
+
+@keyframes pulse-recording {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+.chat-text-input {
+  flex: 1;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-primary);
+  padding: 14px 16px;
+  border-radius: 16px;
+  outline: none;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+
+.chat-text-input:focus {
+  border-color: var(--primary-color);
+}
+
+.chat-send-btn {
+  background: var(--primary-color);
+  border: none;
+  color: var(--text-inverse);
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.chat-send-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px var(--primary-glow);
+}
+
+/* Schedulers & Pest panel styling */
+.scheduler-split {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.irrigation-panel, .pest-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.irrigation-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.irrigation-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+
+.irrigation-icon.normal {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--primary-color);
+}
+
+.irrigation-icon.critical {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--danger-color);
+}
+
+.irrigation-icon.rain {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--info-color);
+}
+
+.irrigation-content h4 {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.irrigation-content p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* Pest Form */
+.pest-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pest-result-card {
+  background: linear-gradient(135deg, rgba(234, 179, 8, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid var(--accent-glow);
+  border-radius: 18px;
+  padding: 16px;
+  margin-top: 10px;
+  display: none; /* Shown dynamically */
+}
+
+.pest-result-card.active {
+  display: block;
+  animation: slide-in 0.3s ease-out;
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pest-result-item {
+  margin-bottom: 12px;
+}
+
+.pest-result-item:last-child {
+  margin-bottom: 0;
+}
+
+.pest-result-item label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.pest-result-item p {
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+/* Spray Reminders Log */
+.reminder-scheduler-log {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  padding: 16px;
+  margin-top: 14px;
+}
+
+.reminder-scheduler-log h5 {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.reminder-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reminder-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+}
+
+.reminder-item span {
+  font-weight: 600;
+}
+
+.reminder-item .date-tag {
+  color: var(--accent-color);
+  font-weight: 700;
+}
+
+.reminder-item button {
+  background: transparent;
+  border: none;
+  color: var(--danger-color);
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+/* Footer Section */
+footer {
+  text-align: center;
+  padding: 30px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+/* Responsive Overrides */
+@media (max-width: 1024px) {
+  .col-soil, .col-weather, .col-recommendations, .col-assistant {
+    grid-column: span 12;
+  }
+  .scheduler-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .app-container {
+    padding: 12px;
+  }
+  header {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+  .header-controls {
+    width: 100%;
+    justify-content: center;
+  }
+  .climate-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .soil-types-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
